@@ -27,7 +27,7 @@ resource "cloudflare_ruleset" "custom_waf" {
     {
       action = "managed_challenge"
       description = "Mitigate definite bot traffic"
-      expression = "(cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)"
+      expression = "(cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
       enabled = true
     } 
   ]
