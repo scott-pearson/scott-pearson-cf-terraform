@@ -21,6 +21,7 @@ resource "cloudflare_account_token" "r2_account_token" {
   ]
 }
 
+# Bug with this when changing anything - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5710
 resource "cloudflare_account_token" "terraform_account_token" {
   account_id = var.cloudflare_account_id
   name       = "Terraform token - Scott Pearson"
