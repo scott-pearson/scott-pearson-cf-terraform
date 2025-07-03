@@ -6,7 +6,9 @@ resource "cloudflare_load_balancer_pool" "prod_lb_pool" {
   monitor = "f200caeafaa828d6a8ea2ed2df2d5440"
   minimum_origins = 1
   notification_email = "scott@cloudflare.com"
-  
+
+  check_regions = ["WEU"]
+
   origins = [
     {
     name = "scott-web01"

@@ -10,6 +10,7 @@ terraform {
     bucket = "scott-pearson-tf-state"
     key    = "Scott Pearson/scottpearson.net/terraform.tfstate"
     region                      = "auto"
+    use_lockfile                = true
     skip_credentials_validation = true
     skip_metadata_api_check     = true
     skip_region_validation      = true
