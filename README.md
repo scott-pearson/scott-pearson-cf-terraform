@@ -4,9 +4,9 @@ This repository manages Cloudflare account and zone-level configurations using T
 
 ## Features
 
-- Centralized management of Cloudflare DNS records.
+- Centralized management of Cloudflare account-level settings.
 - Configuration of Cloudflare zone settings (e.g., SSL/TLS, caching, security).
-- Management of Cloudflare account-level settings.
+- Management of Cloudflare DNS records, WAF rules, and more.
 
 ## Prerequisites
 
@@ -64,21 +64,43 @@ Before you begin, ensure you have the following installed:
 
     Terraform will prompt you to confirm the actions before applying them.
 
-## Repository Structure (Example)
+## Repository Structure
+
+The repository is organized into two main sections:
+
+### Account-Level Configurations
+
+These files manage account-wide settings and are located in the root directory.
 
 ```
 .
-├── main.tf             # Main Terraform configuration file
-├── variables.tf        # Input variables definitions
-├── outputs.tf          # Output values definitions
-├── versions.tf         # Terraform and provider version constraints
-└── README.md
+├── account.tf
+├── account_dns_settings.tf
+├── account_notification.tf
+├── account_token.tf
+├── custom_waf.tf
+├── managed_waf.tf
+├── member.tf
+├── provider.tf
+└── variable.tf
+```
+
+### Zone-Level Configurations (`scottpearson.net`)
+
+These files manage settings specific to the `scottpearson.net` zone and are located in the `scottpearson.net/` directory.
+
+```
+scottpearson.net/
+├── custom_hostnames.tf
+├── dns.tf
+├── lb.tf
+├── provider.tf
+├── settings.tf
+├── spectrum.tf
+├── ssl.tf
+└── variable.tf
 ```
 
 ## Contributing
 
 Feel free to open issues or submit pull requests. Please ensure your changes align with the project's goals and follow best practices for Terraform.
-
-## License
-
-This project is licensed under the MIT License - see the `LICENSE` file for details (if applicable, otherwise remove this section or specify your license).
