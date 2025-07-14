@@ -22,5 +22,6 @@ terraform {
 }
 
 provider "cloudflare" {
-  api_token = var.cloudflare_api_token
+# too many things don't work with account_api_tokens at this time using $CLOUDFLARE_EMAIL and $CLOUDFLARE_API_KEY env variables instead
+#api_token = var.cloudflare_api_token
 }

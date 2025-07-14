@@ -18,3 +18,12 @@ resource "cloudflare_regional_tiered_cache" "regional_tiered_cache" {
   value = "on"
 }
 
+resource "cloudflare_leaked_credential_check" "leaked_credential_check" {
+  zone_id = var.cloudflare_zone_id
+  enabled = true
+}
+
+resource "cloudflare_logpull_retention" "logpull_retention" {
+  zone_id = var.cloudflare_zone_id
+  flag = true
+}
