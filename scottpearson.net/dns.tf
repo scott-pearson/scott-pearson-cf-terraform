@@ -36,7 +36,7 @@ resource "cloudflare_dns_record" "dns_1" {
   name = "www.scottpearson.net"
   type = "CNAME"
   content = "lb.scottpearson.net"
-  proxied = true 
+  proxied = true
   ttl = 1
 }
 
