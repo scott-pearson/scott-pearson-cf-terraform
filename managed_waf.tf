@@ -6,6 +6,20 @@ resource "cloudflare_ruleset" "ruleset_managed_waf" {
 
   rules = [
     {
+      action = "skip"
+      action_parameters = {
+        ruleset = "current"
+      }
+      
+      description = "Exception (Wordpress Upload)"
+      enabled = true
+      expression = "(http.request.uri.path eq \"/wp-admin/async-upload.php\" and http.cookie contains \"wordpress_logged_in\")"
+      logging = {
+        enabled = true
+      }
+    },
+    
+    {
       action = "execute"
       action_parameters = {
         id = "efb7b8c949ac4650a09736fc376e9aee"
