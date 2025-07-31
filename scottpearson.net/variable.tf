@@ -1,8 +1,8 @@
-variable "cloudflare_api_token" {
-  description = "Cloudflare API Token"
-  type        = string
-  sensitive   = true
-}
+#variable "cloudflare_api_token" {
+#  description = "Cloudflare API Token"
+#  type        = string
+#  sensitive   = true
+#}
 
 variable "cloudflare_account_id" {
   description = "Cloudflare account ID"
@@ -25,5 +25,17 @@ variable "aop_cert" {
 variable "aop_key" {
   type      = string
   description = "Private key for Authenticated Origin Pulls"
+  sensitive = true
+}
+
+variable "http_logpush_keyid" {
+  type      = string
+  description = "client key id for HTTP logpush job"
+  sensitive = true
+}
+
+variable "http_logpush_secretaccesskey" {
+  type      = string
+  description = "secret access key for HTTP logpush job"
   sensitive = true
 }

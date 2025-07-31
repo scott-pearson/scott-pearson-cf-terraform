@@ -1,3 +1,22 @@
+resource "cloudflare_account_token" "cloudflare_managed_30db015b" {
+  account_id = var.cloudflare_account_id
+  name       = "cloudflare-managed-30db015b"
+  policies = [
+    {
+      effect = "allow"
+      permission_groups = [
+        {
+          id = "bf7481a1826f439697cb59a20b22293e"
+          #name = "Workers R2 Storage Write"
+        }
+      ]
+      resources = {
+        "com.cloudflare.api.account.${var.cloudflare_account_id}" = "*"
+      }
+    }
+  ]
+}
+
 resource "cloudflare_account_token" "r2_account_token" {
   account_id = var.cloudflare_account_id
   name       = "R2 Account Token"
