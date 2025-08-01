@@ -128,7 +128,21 @@ resource "cloudflare_ruleset" "custom_log_fields" {
           {
             name = "authorization"
           }
-        ],
+        ]
+        transformed_request_fields = [
+          {
+            name = "cf-cert-revoked"
+          },
+          {
+            name = "cf-cert-verified"
+          },
+          {
+            name = "cf-cert-presented"
+          },
+          {
+            name = "cf-cert-issuer-dn"
+          }
+        ]
         response_fields = [
           {
             name = "cache-control"

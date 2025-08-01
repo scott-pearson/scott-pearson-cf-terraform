@@ -2,6 +2,10 @@ resource "cloudflare_api_shield" "session_identifier" {
   zone_id = var.cloudflare_zone_id
   auth_id_characteristics = [
     {
+      name = "116c0a3d-6be8-43c4-a355-8b2a3704e991:$.name"
+      type = "jwt"
+    },
+    {
       name = "authorization"
       type = "header"
     }

@@ -9,6 +9,10 @@
 #    {
 #      id = "add_visitor_location_headers"
 #      enabled = true
+#    },
+#    {
+#      id = "add_client_certificate_headers"
+#      enabled = true
 #    }
 #  ]
 #  managed_response_headers = [
