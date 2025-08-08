@@ -7,7 +7,7 @@ resource "cloudflare_ruleset" "custom_rules" {
     {
       action = "block"
       description = "Block API requests with no authentication"
-      enabled = false
+      enabled = true
       expression = "(not cf.api_gateway.auth_id_present and http.host eq \"api.scottpearson.net\")"
     },
     {
