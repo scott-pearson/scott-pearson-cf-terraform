@@ -26,6 +26,12 @@ resource "cloudflare_ruleset" "custom_waf" {
   rules = [
     {
       action = "block"
+      description = "Mitigate requests that have leaked credentials"
+      expression = "(cf.waf.credential_check.username_and_password_leaked)"
+      enabled = true
+    },
+    {
+      action = "block"
       description = "Mitigate definite bot traffic"
       expression = "(cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
       enabled = true
@@ -35,6 +41,6 @@ resource "cloudflare_ruleset" "custom_waf" {
       description = "Mitigate likely bot bot traffic"
       expression = "(cf.bot_management.score ge 1 and cf.bot_management.score le 29 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
       enabled = true
-    } 
+    }
   ]
 }
