@@ -15,7 +15,7 @@ resource "cloudflare_api_shield" "session_identifier" {
 # Bug with this - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5794
 #resource "cloudflare_api_shield_schema_validation_settings" "zone_level_settings" {
 #  zone_id                               = var.cloudflare_zone_id
-#  validation_default_mitigation_action  = "log"
+#  validation_default_mitigation_action  = "block"
 #}
 
 # Bug with this - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5749

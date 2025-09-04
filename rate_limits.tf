@@ -37,6 +37,23 @@ resource "cloudflare_ruleset" "rate_limits" {
         period = 60
         requests_per_period = 5
       }
+    },
+    {
+      action = "managed_challenge"
+      description = "WAF Attack Score Rate Limit"
+      enabled = true
+      expression = "true"
+      ratelimit = {
+        characteristics = [
+          "ip.src",
+          "cf.colo.id"
+        ]
+        counting_expression = "(cf.waf.score le 20)"
+        mitigation_timeout = 3600
+        period = 60
+        requests_per_period = 5
+        requests_to_origin = "true"
+      }
     }
   ]
 }
