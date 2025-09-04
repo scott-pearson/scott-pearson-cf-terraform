@@ -17,8 +17,7 @@ resource "cloudflare_ruleset" "ruleset_managed_waf" {
       logging = {
         enabled = true
       }
-    },
-    
+    },    
     {
       action = "execute"
       action_parameters = {
@@ -40,7 +39,6 @@ resource "cloudflare_ruleset" "ruleset_managed_waf" {
       enabled = true
       expression = "true"
     },
-
     {
       action = "execute"
       action_parameters = {
