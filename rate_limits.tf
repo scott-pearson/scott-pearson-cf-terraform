@@ -28,6 +28,7 @@ resource "cloudflare_ruleset" "rate_limits" {
       description = "Rate Limit Wordpress Login"
       enabled = true
       expression = "(http.request.uri.path eq \"/wp-login.php\" and http.request.method eq \"POST\")"
+      ref = "wordpress_rl_rule"
       ratelimit = {
         characteristics = [
           "ip.src",
@@ -43,6 +44,7 @@ resource "cloudflare_ruleset" "rate_limits" {
       description = "WAF Attack Score Rate Limit"
       enabled = true
       expression = "true"
+      ref = "waf_attack_rl_rule"
       ratelimit = {
         characteristics = [
           "ip.src",

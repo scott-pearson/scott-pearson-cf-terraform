@@ -49,15 +49,6 @@ resource "cloudflare_dns_record" "dns_2" {
   ttl = 1
 }
 
-resource "cloudflare_dns_record" "dns_3" {
-  zone_id = var.cloudflare_zone_id
-  name = "logs.scottpearson.net"
-  type = "AAAA"
-  content = "100::"
-  proxied = true 
-  ttl = 1
-}
-
 resource "cloudflare_dns_record" "dns_4" {
   zone_id = var.cloudflare_zone_id
   name = "api.scottpearson.net"

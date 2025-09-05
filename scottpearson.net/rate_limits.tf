@@ -9,6 +9,7 @@ resource "cloudflare_ruleset" "rate_limits" {
       description = "Rate Limit by user (JWT)"
       enabled = true
       expression = "(http.host eq \"api.scottpearson.net\" and any(http.request.headers.names[*] eq \"jwt-auth-header\"))"
+      ref = "jwt_rl_rule"
       ratelimit = {
         characteristics = [
           "lookup_json_string(http.request.jwt.claims[\"116c0a3d-6be8-43c4-a355-8b2a3704e991\"][0],\"name\")",

@@ -17,6 +17,7 @@ resource "cloudflare_ruleset" "ruleset_managed_waf" {
       logging = {
         enabled = true
       }
+      ref = "wordpress_exception_rule"
     },    
     {
       action = "execute"
@@ -38,6 +39,7 @@ resource "cloudflare_ruleset" "ruleset_managed_waf" {
       description = "Cloudflare Managed"
       enabled = true
       expression = "true"
+      ref = "managed_waf_rule"
     },
     {
       action = "execute"
@@ -74,6 +76,7 @@ resource "cloudflare_ruleset" "ruleset_managed_waf" {
       description = "OWASP"
       enabled = true
       expression = "true"
+      ref = "owasp_managed_rule"
     }
   ]
 }

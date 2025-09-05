@@ -10,7 +10,6 @@ export default {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5">
     <title>Checking your browser - Scott Pearson</title>
     <style>
         body {
@@ -70,9 +69,9 @@ export default {
 </html>
 `;
 
-    // Return the custom HTML response. A 403 status is still appropriate.
+    // Return the custom HTML response. A 503 status is appropriate.
     return new Response(html, {
-      status: 403,
+      status: 503,
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
       },

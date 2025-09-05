@@ -1,3 +1,5 @@
+# Variable values stored in terraform.tfvars file locally
+
 variable "cloudflare_account_id" {
   description = "Cloudflare account ID"
   type        = string
