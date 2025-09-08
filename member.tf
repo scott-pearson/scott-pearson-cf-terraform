@@ -18,4 +18,5 @@ resource "cloudflare_account_member" "mbamps-cloudflare-com" {
   account_id = var.cloudflare_account_id
   email = "mbamps@cloudflare.com"
   roles = ["05784afa30c1afe1440e79d9351c7430"]
+  status = "accepted"
 }
