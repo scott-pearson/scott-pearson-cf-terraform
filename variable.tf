@@ -1,8 +1,15 @@
 # Variable values are defined in terraform.tfvars file stored locally
 
+variable "cloudflare_api_token" {
+  description = "Cloudflare API token"
+  type        = string
+  sensitive   = true
+}
+
 variable "cloudflare_account_id" {
   description = "Cloudflare account ID"
   type        = string
+  sensitive   = false
 }
 
 variable "cloudflare_zone_id" {
