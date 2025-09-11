@@ -19,11 +19,6 @@ resource "cloudflare_zone" "test_scottpearson_website_zone" {
 #  }
 #}
 
-resource "cloudflare_argo_smart_routing" "smart_routing" {
-  zone_id = cloudflare_zone.test_scottpearson_website_zone.id
-  value = "on"
-}
-
 resource "cloudflare_argo_tiered_caching" "tiered_caching" {
   zone_id = cloudflare_zone.test_scottpearson_website_zone.id
   value = "on"
