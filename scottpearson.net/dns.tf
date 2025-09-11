@@ -1,5 +1,5 @@
 resource "cloudflare_zone_dns_settings" "scott_pearson_net_dns_settings" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   flatten_all_cnames = false
   foundation_dns = false
   multi_provider = false
@@ -23,7 +23,7 @@ resource "cloudflare_zone_dns_settings" "scott_pearson_net_dns_settings" {
 }
 
 resource "cloudflare_dns_record" "dns_0" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "scottpearson.net"
   type = "CNAME"
   content = "lb.scottpearson.net"
@@ -32,7 +32,7 @@ resource "cloudflare_dns_record" "dns_0" {
 }
 
 resource "cloudflare_dns_record" "dns_1" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "www.scottpearson.net"
   type = "CNAME"
   content = "lb.scottpearson.net"
@@ -41,7 +41,7 @@ resource "cloudflare_dns_record" "dns_1" {
 }
 
 resource "cloudflare_dns_record" "dns_2" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "fallback.scottpearson.net"
   type = "CNAME"
   content = "lb.scottpearson.net"
@@ -50,7 +50,7 @@ resource "cloudflare_dns_record" "dns_2" {
 }
 
 resource "cloudflare_dns_record" "dns_4" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "api.scottpearson.net"
   type = "CNAME"
   content = "lb.scottpearson.net"

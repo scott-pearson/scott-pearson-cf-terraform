@@ -1,5 +1,5 @@
 resource "cloudflare_snippet" "snippet_1" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
   snippet_name = "wafCustomPage"
   files = [
     {
@@ -13,7 +13,7 @@ resource "cloudflare_snippet" "snippet_1" {
 }
 
 resource "cloudflare_snippet" "snippet_2" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
   snippet_name = "5xxCustomPage"
   files = [
     {
@@ -27,7 +27,7 @@ resource "cloudflare_snippet" "snippet_2" {
 }
 
 resource "cloudflare_snippet" "snippet_3" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
   snippet_name = "1xxxCustomPage"
   files = [
     {
@@ -41,7 +41,7 @@ resource "cloudflare_snippet" "snippet_3" {
 }
 
 resource "cloudflare_snippet" "snippet_4" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
   snippet_name = "challengeCustomPage"
   files = [
     {
@@ -55,7 +55,7 @@ resource "cloudflare_snippet" "snippet_4" {
 }
 
 resource "cloudflare_snippet" "snippet_5" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
   snippet_name = "ratelimitCustomPage"
   files = [
     {
@@ -69,7 +69,7 @@ resource "cloudflare_snippet" "snippet_5" {
 }
 
 resource "cloudflare_snippet_rules" "snippet_rules" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
   rules = [
     {
       enabled = true

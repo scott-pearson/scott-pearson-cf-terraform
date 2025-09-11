@@ -1,5 +1,5 @@
 resource "cloudflare_load_balancer" "prod_lb" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "lb.scottpearson.net" 
   description = "Production Load Balancer"
   default_pools = [cloudflare_load_balancer_pool.prod_lb_pool.id]

@@ -3,7 +3,7 @@ resource "cloudflare_logpush_job" "http_logpush" {
   destination_conf = "r2://cloudflare-managed-30db015b/{DATE}?access-key-id=${var.http_logpush_keyid}&secret-access-key=${var.http_logpush_secretaccesskey}&account-id=${var.cloudflare_account_id}"
   enabled          = true
   name             = "http-logs"
-  zone_id          = var.cloudflare_zone_id
+  zone_id          = cloudflare_zone.scottpearson_net_zone.id
   kind             = null
   max_upload_bytes = 10000000
   max_upload_records = 10000
@@ -116,7 +116,7 @@ resource "cloudflare_logpush_job" "http_logpush" {
 }
 
 resource "cloudflare_ruleset" "custom_log_fields" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   kind = "zone"
   name = "default"
   phase = "http_log_custom_fields"

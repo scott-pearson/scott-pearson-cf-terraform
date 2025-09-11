@@ -1,6 +1,6 @@
 # Currently there is an issue with this resource as it will update in place on each apply - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5627
 #resource "cloudflare_managed_transforms" "managed_transforms" {
-#  zone_id = var.cloudflare_zone_id 
+#  zone_id = cloudflare_zone.scottpearson_net_zone.id 
 #  managed_request_headers = [
 #    {
 #      id = "add_bot_protection_headers"

@@ -1,10 +1,10 @@
 # Variable values stored in terraform.tfvars file locally
 
-variable "cloudflare_api_token" {
-  description = "Cloudflare API token"
-  type        = string
-  sensitive   = true
-}
+#variable "cloudflare_api_token" {
+#  description = "Cloudflare API token"
+#  type        = string
+#  sensitive   = true
+#}
 
 variable "cloudflare_account_id" {
   description = "Cloudflare account ID"
@@ -32,18 +32,6 @@ variable "aop_cert" {
 
 variable "aop_key" {
   description = "Private key for Authenticated Origin Pulls"
-  type        = string
-  sensitive   = true
-}
-
-variable "http_logpush_keyid" {
-  description = "client key id for HTTP logpush job"
-  type        = string
-  sensitive   = true
-}
-
-variable "http_logpush_secretaccesskey" {
-  description = "secret access key for HTTP logpush job"
   type        = string
   sensitive   = true
 }

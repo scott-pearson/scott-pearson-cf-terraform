@@ -1,12 +1,12 @@
 resource "cloudflare_custom_hostname_fallback_origin" "fallback_origin" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   origin = "fallback.scottpearson.net"
 }
 
 
 # Currently a bug with the ssl parameter of this - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5726
 #resource "cloudflare_custom_hostname" "scott-ch-custom-hostname" {
-#zone_id = var.cloudflare_zone_id
+#zone_id = cloudflare_zone.scottpearson_net_zone.id
 #hostname = "scott-ch.mbamps.com"
   #ssl = {
   #bundle_method = "ubiquitous"

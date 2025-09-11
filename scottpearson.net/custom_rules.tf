@@ -2,7 +2,7 @@ resource "cloudflare_ruleset" "custom_rules" {
   kind = "zone"
   name = "default"
   phase = "http_request_firewall_custom"
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   rules = [
     {
       action = "block"

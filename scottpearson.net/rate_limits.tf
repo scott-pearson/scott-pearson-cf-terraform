@@ -1,5 +1,5 @@
 resource "cloudflare_ruleset" "rate_limits" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
   kind = "zone"
   name = "default"
   phase = "http_ratelimit"
