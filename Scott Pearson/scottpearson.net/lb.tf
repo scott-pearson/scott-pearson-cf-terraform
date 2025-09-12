@@ -38,7 +38,7 @@ resource "cloudflare_load_balancer" "prod_lb" {
       disabled = false
       condition = "(any(http.request.headers[\"lb\"][*] in {\"eu\" \"amer\"}))"
       overrides = {
-        default_pools = ["cd2e07b66c605c492d26acf62d2ebe00"]
+        default_pools = [cloudflare_load_balancer_pool.prod_lb_pool.id]
       }
     },
     {
@@ -47,7 +47,7 @@ resource "cloudflare_load_balancer" "prod_lb" {
       disabled = false
       condition = "(any(http.request.headers[\"lb\"][*] eq \"row\"))"
       overrides = {
-        default_pools = ["b786c315262a2942e3bf47ba8c6a6b45"]
+        default_pools = [cloudflare_load_balancer_pool.row_prod_lb_pool.id]
       }
     }
   ]
