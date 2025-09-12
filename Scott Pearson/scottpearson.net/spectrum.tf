@@ -18,3 +18,24 @@ resource "cloudflare_spectrum_application" "ssh1_scottpearson_net" {
     type = "dynamic"
   } 
 }
+
+resource "cloudflare_spectrum_application" "ssh2_scottpearson_net" {
+  zone_id = cloudflare_zone.scottpearson_net_zone.id 
+  protocol = "ssh"
+  origin_direct = ["tcp://209.38.29.196:22"]
+  ip_firewall = true
+  proxy_protocol = "off"
+  tls = "off"
+  traffic_type = "direct"
+  argo_smart_routing = true
+
+  dns = {
+    name = "ssh2.scottpearson.net"
+    type = "CNAME"
+  }
+   
+  edge_ips = {
+    connectivity = "all"
+    type = "dynamic"
+  } 
+}

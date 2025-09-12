@@ -99,7 +99,7 @@ resource "cloudflare_notification_policy" "origin_error_notification" {
   name = "Origin Error Rate Alert"
   description = "This alert is for high levels of 5xx HTTP errors at origin"
   filters = {
-    zones = tolist(var.cloudflare_zone_ids),
+    zones = ["9ead243424f613e0194590b375a3c9d2"],
     alert_trigger_preferences = ["slo"],
     slo = ["99.9"]
   }

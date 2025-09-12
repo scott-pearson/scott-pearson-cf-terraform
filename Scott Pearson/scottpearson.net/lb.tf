@@ -29,25 +29,45 @@ resource "cloudflare_load_balancer" "prod_lb" {
     zero_downtime_failover = "none"
   }
   
-  steering_policy = "geo"
+  steering_policy = "proximity"
 
-  region_pools = {
-    EEU = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
-    WEU = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
-    ENAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
-    WNAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
-    NSAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
-    SSAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
-    ME = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
-    NAF = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
-    NEAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
-    OC = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
-    SAF = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
-    SAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
-    SEAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
-  }
+  rules = [
+    {
+      name = "Conditional Routing (EU/AMER)"
+      priority = 0
+      disabled = false
+      condition = "(any(http.request.headers[\"lb\"][*] in {\"eu\" \"amer\"}))"
+      overrides = {
+        default_pools = ["cd2e07b66c605c492d26acf62d2ebe00"]
+      }
+    },
+    {
+      name = "Conditional Routing (ROW)"
+      priority = 10
+      disabled = false
+      condition = "(any(http.request.headers[\"lb\"][*] eq \"row\"))"
+      overrides = {
+        default_pools = ["b786c315262a2942e3bf47ba8c6a6b45"]
+      }
+    }
+  ]
 
-
+  # Custom rules do not work with geo routing so changing to proximity
+  #region_pools = {
+  #  EEU = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+  #  WEU = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+  #  ENAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+  #  WNAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+  #  NSAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+  #  SSAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+  #  ME = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+  #  NAF = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+  #  NEAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+  #  OC = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+  #  SAF = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+  #  SAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+  #  SEAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+  #}
 }
 
 resource "cloudflare_load_balancer_pool" "prod_lb_pool" {
@@ -73,6 +93,9 @@ resource "cloudflare_load_balancer_pool" "prod_lb_pool" {
   origin_steering = {
     policy = "random"
   }
+
+  latitude = 51.5177
+  longitude = -0.6215
 }
 
 resource "cloudflare_load_balancer_pool" "row_prod_lb_pool" {
@@ -98,6 +121,9 @@ resource "cloudflare_load_balancer_pool" "row_prod_lb_pool" {
   origin_steering = {
     policy = "random"
   }
+
+  latitude = -33.8978
+  longitude = 151.1899
 }
 
 
