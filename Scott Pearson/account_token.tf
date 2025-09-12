@@ -1,11 +1,11 @@
 resource "cloudflare_account_token" "r2_account_token" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   name = "R2 Account Token"
   policies = [
     {
       effect = "allow"
       resources = {
-        "com.cloudflare.api.account.${var.cloudflare_account_id}" = "*"
+        "com.cloudflare.api.account.${cloudflare_account.Scott_Pearson_account.id}" = "*"
       }
       permission_groups = [
         {
@@ -26,13 +26,13 @@ resource "cloudflare_account_token" "r2_account_token" {
 }
 
 resource "cloudflare_account_token" "terraform_token" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   name = "Terraform Account Token"
   policies = [
     {
       effect = "allow"
       resources = {
-        "com.cloudflare.api.account.${var.cloudflare_account_id}" = "*"
+        "com.cloudflare.api.account.${cloudflare_account.Scott_Pearson_account.id}" = "*"
       }
       permission_groups = [
         {
@@ -100,7 +100,7 @@ resource "cloudflare_account_token" "terraform_token" {
     {
       effect = "allow"
       resources = {
-        "com.cloudflare.api.account.${var.cloudflare_account_id}" = "*" 
+        "com.cloudflare.api.account.${cloudflare_account.Scott_Pearson_account.id}" = "*" 
       }
       permission_groups = [
         {

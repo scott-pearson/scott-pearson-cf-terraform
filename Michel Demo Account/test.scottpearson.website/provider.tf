@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket = "scott-pearson-tf-state"
-    key    = "Scott Pearson/test.scottpearson.website/terraform.tfstate"
+    key    = "Michel Demo Account/test.scottpearson.website/terraform.tfstate"
     region                      = "auto"
     use_lockfile                = true
     skip_credentials_validation = true

@@ -2,7 +2,7 @@ resource "cloudflare_ruleset" "ratelimit-root" {
   kind       = "root"
   name       = "default"
   phase      = "http_ratelimit"
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   
   rules = [
     {
@@ -18,7 +18,7 @@ resource "cloudflare_ruleset" "ratelimit-root" {
 }
 
 resource "cloudflare_ruleset" "rate_limits" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   kind = "custom"
   name = "default"
   phase = "http_ratelimit"

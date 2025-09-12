@@ -6,12 +6,6 @@ variable "cloudflare_api_token" {
   sensitive   = true
 }
 
-variable "cloudflare_account_id" {
-  description = "Cloudflare account ID"
-  type        = string
-  sensitive   = false
-}
-
 variable "cloudflare_account_name" {
   description = "Cloudflare Account Name"
   type        = string
@@ -24,9 +18,9 @@ variable "cloudflare_account_type" {
   sensitive   = false
 }
 
-variable "cloudflare_zone_id" {
-  description = "Cloudflare zone ID"
-  type        = string
+variable "cloudflare_zone_ids" {
+  description = "Cloudflare Zone IDs for notifications"
+  type        = set(string)
   sensitive   = false
 }
 

@@ -1,5 +1,5 @@
 resource "cloudflare_ruleset" "ruleset_managed_waf" {
-  account_id  = var.cloudflare_account_id
+  account_id  = cloudflare_account.Scott_Pearson_account.id
   kind        = "root"
   name        = "root"
   phase       = "http_request_firewall_managed"

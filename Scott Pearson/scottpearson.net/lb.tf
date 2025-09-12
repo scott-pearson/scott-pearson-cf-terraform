@@ -2,17 +2,18 @@ resource "cloudflare_load_balancer" "prod_lb" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "lb.scottpearson.net" 
   description = "Production Load Balancer"
-  default_pools = [cloudflare_load_balancer_pool.prod_lb_pool.id]
+  default_pools = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
   fallback_pool = cloudflare_load_balancer_pool.prod_lb_pool.id
   proxied = true
+  enabled = true
   
   adaptive_routing = {
-    failover_across_pools = false
+    failover_across_pools = true
   }
   
   location_strategy = {
-    mode = "pop"
-    prefer_ecs = "proximity"
+    mode = "resolver_ip"
+    prefer_ecs = "always"
   }
    
   random_steering = {
@@ -20,6 +21,7 @@ resource "cloudflare_load_balancer" "prod_lb" {
   }
   
   session_affinity = "none"
+ 
   session_affinity_attributes = {
     drain_duration = 0
     samesite = "Auto"
@@ -27,26 +29,44 @@ resource "cloudflare_load_balancer" "prod_lb" {
     zero_downtime_failover = "none"
   }
   
-  steering_policy = "off"
+  steering_policy = "geo"
+
+  region_pools = {
+    EEU = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+    WEU = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+    ENAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+    WNAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+    NSAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+    SSAM = [cloudflare_load_balancer_pool.prod_lb_pool.id, cloudflare_load_balancer_pool.row_prod_lb_pool.id]
+    ME = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+    NAF = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+    NEAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+    OC = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+    SAF = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+    SAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+    SEAS = [cloudflare_load_balancer_pool.row_prod_lb_pool.id, cloudflare_load_balancer_pool.prod_lb_pool.id]
+  }
+
+
 }
 
 resource "cloudflare_load_balancer_pool" "prod_lb_pool" {
   account_id = var.cloudflare_account_id
-  name = "production"
-  description = "production"
+  name = "eu-amer-production"
+  description = "EU/AMER production pool"
   enabled = true
   monitor = cloudflare_load_balancer_monitor.prod_lb_monitor.id
   minimum_origins = 1
   notification_email = "scott@cloudflare.com"
 
-  check_regions = ["WEU"]
+  check_regions = ["WEU","EEU", "ENAM", "WNAM", "NSAM", "SSAM"]
 
   origins = [
     {
-    name = "scott-web01"
-    address = "104.248.162.62"
-    weight = 1
-    enabled = true
+      name = "scott-web01"
+      address = "104.248.162.62"
+      weight = 1
+      enabled = true
     }
   ]
 
@@ -54,6 +74,32 @@ resource "cloudflare_load_balancer_pool" "prod_lb_pool" {
     policy = "random"
   }
 }
+
+resource "cloudflare_load_balancer_pool" "row_prod_lb_pool" {
+  account_id = var.cloudflare_account_id
+  name = "row-production"
+  description = "Rest of world production pool"
+  enabled = true
+  monitor = cloudflare_load_balancer_monitor.prod_lb_monitor.id
+  minimum_origins = 1
+  notification_email = "scott@cloudflare.com"
+
+  check_regions = ["ME", "NAF", "NEAS", "OC", "SAS", "SAF", "SEAS"]
+
+  origins = [
+    {
+      name = "scott-web02"
+      address = "209.38.29.196"
+      weight = 1
+      enabled = true
+    }
+  ]
+
+  origin_steering = {
+    policy = "random"
+  }
+}
+
 
 ## bug in https://github.com/cloudflare/terraform-provider-cloudflare/issues/5676
 resource "cloudflare_load_balancer_monitor" "prod_lb_monitor" {

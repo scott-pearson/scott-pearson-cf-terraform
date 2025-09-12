@@ -1,5 +1,5 @@
 resource "cloudflare_ruleset" "custom_waf_root" { 
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   kind       = "root"
   name       = "default"
   phase      = "http_request_firewall_custom"
@@ -18,7 +18,7 @@ resource "cloudflare_ruleset" "custom_waf_root" {
 }
 
 resource "cloudflare_ruleset" "custom_waf" {
-  account_id  = var.cloudflare_account_id
+  account_id  = cloudflare_account.Scott_Pearson_account.id
   kind        = "custom"
   name        = "default"
   phase       = "http_request_firewall_custom"

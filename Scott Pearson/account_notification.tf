@@ -1,5 +1,5 @@
 resource "cloudflare_notification_policy" "aop_cert_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "zone_aop_custom_certificate_expiration_type"
   enabled = true
   mechanisms = {
@@ -15,7 +15,7 @@ resource "cloudflare_notification_policy" "aop_cert_notification" {
 }
 
 resource "cloudflare_notification_policy" "bot_detection_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "bot_traffic_basic_alert"
   enabled = true
   mechanisms = {
@@ -28,12 +28,12 @@ resource "cloudflare_notification_policy" "bot_detection_notification" {
   name = "Bot Detection Alert"
   description = "This alert is for bot detection, will trigger if a bot attack is detected"
   filters = {
-    zones = [var.cloudflare_zone_id]
+    zones = tolist(var.cloudflare_zone_ids)
   }
 }
 
 resource "cloudflare_notification_policy" "incident_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "incident_alert"
   enabled = true
   mechanisms = {
@@ -54,7 +54,7 @@ resource "cloudflare_notification_policy" "incident_notification" {
 }
 
 resource "cloudflare_notification_policy" "maintenance_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "maintenance_event_notification"
   enabled = true
   mechanisms = {
@@ -70,7 +70,7 @@ resource "cloudflare_notification_policy" "maintenance_notification" {
 }
 
 resource "cloudflare_notification_policy" "l7_ddos_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "dos_attack_l7"
   enabled = true
   mechanisms = {
@@ -86,7 +86,7 @@ resource "cloudflare_notification_policy" "l7_ddos_notification" {
 }
 
 resource "cloudflare_notification_policy" "origin_error_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "http_alert_origin_error"
   enabled = true
   mechanisms = {
@@ -99,14 +99,14 @@ resource "cloudflare_notification_policy" "origin_error_notification" {
   name = "Origin Error Rate Alert"
   description = "This alert is for high levels of 5xx HTTP errors at origin"
   filters = {
-    zones = [var.cloudflare_zone_id],
+    zones = tolist(var.cloudflare_zone_ids),
     alert_trigger_preferences = ["slo"],
     slo = ["99.9"]
   }
 }
 
 resource "cloudflare_notification_policy" "traffic_anomalies_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "traffic_anomalies_alert"
   enabled = true
   mechanisms = {
@@ -119,13 +119,13 @@ resource "cloudflare_notification_policy" "traffic_anomalies_notification" {
   name = "Traffic Anomalies Alert"
   description = "This alert is for Traffic anomalies"
   filters = {
-    zones = [var.cloudflare_zone_id],
+    zones = tolist(var.cloudflare_zone_ids),
     alert_trigger_preferences = ["zscore_spike_and_drop"]
   }
 }
 
 resource "cloudflare_notification_policy" "origin_monitoring_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "real_origin_monitoring"
   enabled = true
   mechanisms = {
@@ -141,7 +141,7 @@ resource "cloudflare_notification_policy" "origin_monitoring_notification" {
 }
 
 resource "cloudflare_notification_policy" "security_events_notification" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   alert_type = "clickhouse_alert_fw_anomaly"
   enabled = true
   mechanisms = {
@@ -154,6 +154,6 @@ resource "cloudflare_notification_policy" "security_events_notification" {
   name = "Security Events Alert"
   description = "This alert is for spikes in security events"
   filters = {
-    zones = [var.cloudflare_zone_id]
+    zones = tolist(var.cloudflare_zone_ids)
   }
 }

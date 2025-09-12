@@ -1,5 +1,5 @@
 resource "cloudflare_account_dns_settings" "Scott_Pearson_account_dns_settings" {
-  account_id = var.cloudflare_account_id
+  account_id = cloudflare_account.Scott_Pearson_account.id
   zone_defaults = {
     flatten_all_cnames = false
     foundation_dns = false
