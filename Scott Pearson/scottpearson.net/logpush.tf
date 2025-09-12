@@ -115,6 +115,54 @@ resource "cloudflare_logpush_job" "http_logpush" {
   }
 }
 
+resource "cloudflare_logpush_job" "firewall_logpush" {
+  dataset          = "firewall_events"
+  destination_conf = "r2://cloudflare-managed-6f6cf601/{DATE}?access-key-id=${var.http_logpush_keyid}&secret-access-key=${var.http_logpush_secretaccesskey}&account-id=${var.cloudflare_account_id}"
+  enabled          = true
+  name             = "firewall-events"
+  zone_id          = cloudflare_zone.scottpearson_net_zone.id
+  output_options = {
+    field_names = [
+                    "Action",
+                    "ClientASN",
+                    "ClientASNDescription",
+                    "ClientCountry",
+                    "ClientIP",
+                    "ClientIPClass",
+                    "ClientRefererHost",
+                    "ClientRefererPath",
+                    "ClientRefererQuery",
+                    "ClientRefererScheme",
+                    "ClientRequestHost",
+                    "ClientRequestMethod",
+                    "ClientRequestPath",
+                    "ClientRequestProtocol",
+                    "ClientRequestQuery",
+                    "ClientRequestScheme",
+                    "ClientRequestUserAgent",
+                    "ContentScanObjResults",
+                    "ContentScanObjSizes",
+                    "ContentScanObjTypes",
+                    "Datetime",
+                    "Description",
+                    "EdgeColoCode",
+                    "EdgeResponseStatus",
+                    "Kind",
+                    "LeakedCredentialCheckResult",
+                    "MatchIndex",
+                    "Metadata",
+                    "OriginResponseStatus",
+                    "OriginatorRayID",
+                    "RayID",
+                    "Ref",
+                    "RuleID",
+                    "Source"
+    ]
+    timestamp_format = "rfc3339"
+    cve_2021_44228   = true
+  }
+}
+
 resource "cloudflare_ruleset" "custom_log_fields" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   kind = "zone"

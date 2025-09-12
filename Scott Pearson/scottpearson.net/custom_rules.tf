@@ -24,6 +24,6 @@ resource "cloudflare_ruleset" "custom_rules" {
       enabled = true
       expression = "(cf.api_gateway.fallthrough_detected and http.host in {\"api.scottpearson.net\"})"
       ref = "api_fallthrough_rule"
-    }
+    },
   ]
 }
