@@ -13,10 +13,10 @@ resource "cloudflare_api_shield" "session_identifier" {
 }
 
 # Bug with this - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5794
-#resource "cloudflare_api_shield_schema_validation_settings" "zone_level_settings" {
-#  zone_id                               = cloudflare_zone.scottpearson_net_zone.id
-#  validation_default_mitigation_action  = "block"
-#}
+resource "cloudflare_schema_validation_settings" "zone_level_settings" {
+  zone_id                               = cloudflare_zone.scottpearson_net_zone.id
+  validation_default_mitigation_action  = "block"
+}
 
 # Bug with this - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5749
 #resource "cloudflare_api_shield_operation" "endpoint_1" {

@@ -1,3 +1,14 @@
+resource "cloudflare_custom_ssl" "custom_ssl" {
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
+  certificate = var.custom_cert 
+  private_key = var.custom_key
+  bundle_method = "ubiquitous"
+  geo_restrictions = {
+    label = "highest_security"
+  }
+  type = "legacy_custom"
+}
+
 resource "cloudflare_certificate_pack" "advanced_ssl" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   certificate_authority = "google"

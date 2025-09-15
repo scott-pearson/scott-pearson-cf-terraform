@@ -36,6 +36,18 @@ variable "aop_key" {
   sensitive   = true
 }
 
+variable "custom_cert" {
+  description = "Certificate for custom SSL"
+  type        = string
+  sensitive   = true
+}
+
+variable "custom_key" {
+  description = "Private key for custom SSL"
+  type        = string
+  sensitive   = true
+}
+
 variable "http_logpush_keyid" {
   description = "client key id for HTTP logpush job"
   type        = string
