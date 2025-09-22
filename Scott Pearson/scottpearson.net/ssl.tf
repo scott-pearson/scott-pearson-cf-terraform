@@ -19,7 +19,6 @@ resource "cloudflare_certificate_pack" "advanced_ssl" {
   cloudflare_branding = false
 }
 
-# Bug with this but able to workaround for now - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5714
 resource "cloudflare_authenticated_origin_pulls_certificate" "aop_certificate" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   certificate = var.aop_cert  

@@ -13,7 +13,7 @@ resource "cloudflare_ruleset" "ruleset_managed_waf" {
       
       description = "Exception (Wordpress Upload)"
       enabled = true
-      expression = "(http.request.uri.path eq \"/wp-admin/async-upload.php\" and http.cookie contains \"wordpress_logged_in\")"
+      expression = "(http.request.uri.path in {\"/wp-admin/async-upload.php\" \"/wp-admin/admin-ajax.php\"} and http.cookie contains \"wordpress_logged_in\")"
       logging = {
         enabled = true
       }
