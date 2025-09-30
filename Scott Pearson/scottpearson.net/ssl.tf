@@ -29,3 +29,15 @@ resource "cloudflare_authenticated_origin_pulls_settings" "aop_setting" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   enabled = true
 }
+
+# For hostname specific AOP
+#resource "cloudflare_authenticated_origin_pulls" "scottpearson_net" {
+#  zone_id = cloudflare_zone.scottpearson_net_zone.id
+#  config = [
+#    {
+#      cert_id = "e16f9ebb-c2ff-4e80-afce-7d5b897bd8d6" 
+#      enabled = true
+#      hostname = "scottpearson.net"
+#    }
+#  ]
+#}
