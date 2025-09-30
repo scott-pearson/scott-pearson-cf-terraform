@@ -22,6 +22,15 @@ resource "cloudflare_zone_dns_settings" "scott_pearson_net_dns_settings" {
   zone_mode = "standard"
 }
 
+# Bug with this - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5925
+#resource "cloudflare_zone_dnssec" "scottpearson_net_dnssec" {
+#  zone_id = cloudflare_zone.scottpearson_net_zone.id
+#  dnssec_multi_signer = false
+#  dnssec_presigned = false
+#  dnssec_use_nsec3 = false
+#  status = "active"
+#}
+
 resource "cloudflare_dns_record" "dns_0" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "scottpearson.net"

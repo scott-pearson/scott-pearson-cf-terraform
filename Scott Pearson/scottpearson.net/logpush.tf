@@ -189,6 +189,9 @@ resource "cloudflare_ruleset" "custom_log_fields" {
           },
           {
             name = "cf-cert-issuer-dn"
+          },
+          {
+            name = "cf-worker"
           }
         ]
         response_fields = [

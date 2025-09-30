@@ -5,6 +5,20 @@ resource "cloudflare_ruleset" "custom_rules" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   rules = [
     {
+      action = "log"
+      description = "Log clients that passed JS detection"
+      enabled = true
+      expression = "(cf.bot_management.js_detection.passed)"
+      ref = "js_detections_rule"
+    },
+    {
+      action = "log"
+      description = "API Shield Fallthrough rule"
+      enabled = true
+      expression = "(cf.api_gateway.fallthrough_detected and http.host in {\"api.scottpearson.net\"})"
+      ref = "api_fallthrough_rule"
+    },
+    {
       action = "block"
       description = "Block API requests with no authentication"
       enabled = true
@@ -17,13 +31,6 @@ resource "cloudflare_ruleset" "custom_rules" {
       enabled     = true
       expression  = "((not cf.tls_client_auth.cert_verified or cf.tls_client_auth.cert_revoked) and http.host eq \"scottpearson.net\" and http.request.uri.path wildcard r\"/api/*\")"
       ref = "mtls_rule"
-    },
-    {
-      action = "log"
-      description = "API Shield Fallthrough rule"
-      enabled = true
-      expression = "(cf.api_gateway.fallthrough_detected and http.host in {\"api.scottpearson.net\"})"
-      ref = "api_fallthrough_rule"
-    },
+    } 
   ]
 }
