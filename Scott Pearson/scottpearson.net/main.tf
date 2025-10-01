@@ -38,7 +38,7 @@ locals {
     "edge_cache_ttl"              = 7200
     "email_obfuscation"           = "off"
     # This 500s for some reason so commenting out
-    #"hotlink_protection"          = "off"
+    #"hotlink_protection"          = "on"
     "http2"                       = "on"
     "http3"                       = "on"
     "ip_geolocation"              = "on"
