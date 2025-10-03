@@ -24,7 +24,7 @@ locals {
   zone_settings = {
     "0rtt"                        = "on"
     "always_online"               = "on"
-    "always_use_https"            = "on"
+    "always_use_https"            = "off"
     "automatic_https_rewrites"    = "on"
     "brotli"                      = "on"
     "browser_cache_ttl"           = 0
@@ -121,7 +121,7 @@ resource "cloudflare_zone_setting" "zone_settings_hsts" {
     "strict_transport_security": {
       "enabled": true,
       "max_age": 31556952,
-      "include_subdomains": true,
+      "include_subdomains": false,
       "preload": true,
       "nosniff": false
     }

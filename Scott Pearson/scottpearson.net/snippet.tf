@@ -68,6 +68,20 @@ resource "cloudflare_snippet" "snippet_5" {
   }
 }
 
+resource "cloudflare_snippet" "snippet_6" {
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
+  snippet_name = "fetchHeaders"
+  files = [
+    {
+      name    = "fetch.js"
+      content = file("./snippets/fetch.js")
+    }
+  ]
+  metadata = {
+    main_module = "fetch.js"
+  }
+}
+
 resource "cloudflare_snippet_rules" "snippet_rules" {
   zone_id  = cloudflare_zone.scottpearson_net_zone.id
   rules = [
@@ -100,13 +114,12 @@ resource "cloudflare_snippet_rules" "snippet_rules" {
       expression = "(http.request.uri.path eq \"/errors/cf-429.html\")"
       description = "Custom error page for Rate Limit block"
       snippet_name = cloudflare_snippet.snippet_5.snippet_name
+    },
+    {
+      enabled = true
+      expression = "(http.host eq \"test.scottpearson.net\")"
+      description = "Cross zone fetch for headers"
+      snippet_name = cloudflare_snippet.snippet_6.snippet_name
     }
-  ]
-  depends_on = [
-    cloudflare_snippet.snippet_1,
-    cloudflare_snippet.snippet_2,
-    cloudflare_snippet.snippet_3,
-    cloudflare_snippet.snippet_4,
-    cloudflare_snippet.snippet_5
-  ]
+  ] 
 }
