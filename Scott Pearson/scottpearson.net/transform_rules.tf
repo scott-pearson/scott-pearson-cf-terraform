@@ -26,3 +26,53 @@ resource "cloudflare_managed_transforms" "managed_transforms" {
     }
   ]
 }
+
+resource "cloudflare_ruleset" "reqheader_transforms" {
+  zone_id     = cloudflare_zone.scottpearson_net_zone.id
+  name        = "default"
+  description = ""
+  kind        = "zone"
+  phase       = "http_request_late_transform"
+  rules = [
+    {
+      action            = "rewrite"
+      action_parameters = {
+        headers = {
+          x-country = {
+            expression = "ip.src.country"
+            operation  = "set"
+          }
+        }
+      }
+      description = "Send Country in Custom Header"
+      enabled     = true
+      expression  = true
+      ref         = "reqheader_transform1"
+    }
+  ]
+}
+
+resource "cloudflare_ruleset" "resheader_transforms" {
+  zone_id     = cloudflare_zone.scottpearson_net_zone.id
+  name        = "default"
+  description = ""
+  kind        = "zone"
+  phase       = "http_response_headers_transform"
+  rules = [
+    {
+      action            = "rewrite"
+      action_parameters = {
+        headers = {
+          x-country = {
+            expression = "ip.src.country"
+            operation  = "set"
+          }
+        }
+      }
+      description = "Send Country in Custom Response Header"
+      enabled     = true
+      expression  = true
+      ref         = "resheader_transform1"
+    }
+  ]
+}

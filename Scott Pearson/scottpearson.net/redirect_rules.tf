@@ -18,7 +18,7 @@ resource "cloudflare_ruleset" "redirect_rules" {
       }
       description = "Redirect Bob to / and append to query string"
       enabled = true
-      expression = "(http.request.uri.path matches \"^/bob[^/]*$\")"
+      expression = "(http.request.uri.path matches r\"^/bob[^/]*$\")"
       ref = "redirect_rule1"
     }
   ]
