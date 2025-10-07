@@ -15,6 +15,15 @@ resource "cloudflare_ruleset" "cache_ruleset" {
         cache = true
         cache_key = {
           custom_key = {
+            header = {
+              contains = {
+                lb = [
+                  "eu",
+                  "amer",
+                  "row"
+                ]
+              }
+            },
             user = {
               device_type = true,
               geo = true,
@@ -67,6 +76,15 @@ resource "cloudflare_ruleset" "cache_ruleset" {
         cache = true
         cache_key = {
           custom_key = {
+            header = {
+              contains = {
+                lb = [
+                  "eu",
+                  "amer",
+                  "row"
+                ]
+              }
+            },
             user = {
               device_type = true,
               geo = true,
