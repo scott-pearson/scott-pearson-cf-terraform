@@ -14,6 +14,16 @@ resource "cloudflare_ruleset" "config_rules" {
       enabled = true
       expression = "(http.host contains \"mbamps.com\")"
       ref = "config_rule1"
+    },
+    {
+      action = "set_config"
+      action_parameters = {
+        ssl = "full"
+      }
+      description = "Disable SSL for test subdomain"
+      enabled = true
+      expression = "(http.host contains \"test\")"
+      ref = "config_rule2"
     }
   ]
 }

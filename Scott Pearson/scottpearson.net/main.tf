@@ -24,7 +24,7 @@ locals {
   zone_settings = {
     "0rtt"                        = "on"
     "always_online"               = "on"
-    "always_use_https"            = "off"
+    "always_use_https"            = "on"
     "automatic_https_rewrites"    = "on"
     "brotli"                      = "on"
     "browser_cache_ttl"           = 0

@@ -31,6 +31,14 @@ resource "cloudflare_zone_dns_settings" "scott_pearson_net_dns_settings" {
 #  status = "active"
 #}
 
+# For hostnames needing regional services
+resource "cloudflare_regional_hostname" "test" {
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
+  hostname = "test.scottpearson.net"
+  region_key = "eu"
+  routing = "dns"
+}
+
 resource "cloudflare_dns_record" "dns_0" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "scottpearson.net"

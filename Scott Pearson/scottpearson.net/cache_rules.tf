@@ -51,11 +51,22 @@ resource "cloudflare_ruleset" "cache_ruleset" {
               value       = -1
             },
             {
+              status_code = 403,
+              value       = -1
+            },
+            {
               status_code_range = {
-                from      = 402,
+                from      = 404,
                 to        = 499
               }
               value = 3600
+            },
+            {
+              status_code_range = {
+                from     = 301,
+                to       = 302
+              }
+              value = 60
             }
           ]
         }
@@ -112,11 +123,22 @@ resource "cloudflare_ruleset" "cache_ruleset" {
               value       = -1
             },
             {
+              status_code = 403,
+              value       = -1
+            },
+            {
               status_code_range = {
-                from      = 402,
+                from      = 404,
                 to        = 499
               }
               value = 3600
+            },
+            {
+              status_code_range = {
+                from     = 301,
+                to       = 302
+              }
+              value = 60
             }
           ]
         }
