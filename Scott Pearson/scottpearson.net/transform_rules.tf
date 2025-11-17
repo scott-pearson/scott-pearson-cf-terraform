@@ -3,25 +3,29 @@ resource "cloudflare_managed_transforms" "managed_transforms" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id 
   managed_request_headers = [
     {
-      id = "add_bot_protection_headers"
+      id      = "add_bot_protection_headers"
       enabled = true
     },
     {
-      id = "add_visitor_location_headers"
+      id      = "add_visitor_location_headers"
       enabled = true
     },
     {
-      id = "add_client_certificate_headers"
+      id      = "add_client_certificate_headers"
+      enabled = true
+    },
+    {
+      id      = "add_waf_credential_check_status_header"
       enabled = true
     }
   ]
   managed_response_headers = [
     {
-      id = "add_security_headers"
+      id      = "add_security_headers"
       enabled = true
     },
     {
-      id = "remove_x-powered-by_header"
+      id      = "remove_x-powered-by_header"
       enabled = true
     }
   ]
