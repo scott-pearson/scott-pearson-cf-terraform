@@ -83,3 +83,12 @@ resource "cloudflare_dns_record" "dns_5" {
   proxied = true
   ttl = 1
 }
+
+resource "cloudflare_dns_record" "dns_6" {
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
+  name = "api-tunnel.scottpearson.net"
+  type = "CNAME"
+  content = "3aef2ee0-861f-4883-8641-ec8e6d029ab8.cfargotunnel.com"
+  proxied = true
+  ttl = 1
+}
