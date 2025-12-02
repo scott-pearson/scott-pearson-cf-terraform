@@ -1,6 +1,7 @@
 resource "cloudflare_zero_trust_gateway_policy" "gw_policy2" {
   account_id    = var.cloudflare_account_id
   action        = "block"
+  description   = "Block Access to BBC website and Iplayer"
   enabled       = true
   filters       = ["http"]
   name          = "Block BBC"

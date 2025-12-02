@@ -22,3 +22,17 @@ resource "cloudflare_zero_trust_access_group" "my_emails" {
   exclude = []
   is_default = true
 }
+
+resource "cloudflare_zero_trust_access_group" "my_warp" {
+  account_id = var.cloudflare_account_id
+  name = "Warp Enforcement"
+  include = [
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.gateway.id 
+      }
+    }
+  ]
+  require = []
+  exclude = []
+}
