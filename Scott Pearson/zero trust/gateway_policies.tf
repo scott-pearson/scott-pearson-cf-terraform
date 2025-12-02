@@ -1,3 +1,14 @@
+resource "cloudflare_zero_trust_gateway_policy" "gw_policy2" {
+  account_id    = var.cloudflare_account_id
+  action        = "block"
+  enabled       = true
+  filters       = ["http"]
+  name          = "Block BBC"
+  precedence    = 19000
+  traffic       = "any(app.ids[*] in {518 1087})"
+  rule_settings = {}
+}
+
 resource "cloudflare_zero_trust_gateway_policy" "gw_policy1" {
   account_id    = var.cloudflare_account_id
   action        = "off"
