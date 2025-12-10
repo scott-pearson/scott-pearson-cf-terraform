@@ -20,3 +20,12 @@ resource "cloudflare_account_member" "mbamps-cloudflare-com" {
   roles = ["05784afa30c1afe1440e79d9351c7430"]
   status = "accepted"
 }
+
+resource "cloudflare_account_member" "scottkpearson-gmail-com" {
+  account_id = cloudflare_account.Scott_Pearson_account.id
+  email = "scottkpearson1@gmail.com"
+  roles = ["33666b9c79b9a5273fc7344ff42f953d"]
+  status = "accepted"
+}
+
+

@@ -187,6 +187,20 @@ resource "cloudflare_ruleset" "cache_ruleset" {
       expression        = "(http.request.uri.path eq \"/headers.php\")"      
       enabled           = true
       ref               = "cache_rule5"
+    },
+    {
+      action            = "set_cache_settings"
+      action_parameters = {
+        browser_ttl = {
+          mode = "bypass"
+        }
+        cache = false
+      }
+      description       = "Bypass Cache For Waiting Room"
+      expression        = "(http.request.uri.path wildcard r\"/waitingroom/*\")"      
+      enabled           = true
+      ref               = "cache_rule6"
     }
+
   ]
 }

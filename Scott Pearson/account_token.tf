@@ -4,9 +4,9 @@ resource "cloudflare_account_token" "r2_account_token" {
   policies = [
     {
       effect = "allow"
-      resources = {
+      resources = jsonencode({
         "com.cloudflare.api.account.${cloudflare_account.Scott_Pearson_account.id}" = "*"
-      }
+      })
       permission_groups = [
         {
           id = "f45430d92e2b4a6cb9f94f2594c141b8"
@@ -31,9 +31,9 @@ resource "cloudflare_account_token" "terraform_token" {
   policies = [
     {
       effect = "allow"
-      resources = {
+      resources = jsonencode({
         "com.cloudflare.api.account.${cloudflare_account.Scott_Pearson_account.id}" = "*"
-      }
+      })
       permission_groups = [
         {
           id = "5bc3f8b21c554832afc660159ab75fa4"
@@ -99,9 +99,9 @@ resource "cloudflare_account_token" "terraform_token" {
     },
     {
       effect = "allow"
-      resources = {
-        "com.cloudflare.api.account.${cloudflare_account.Scott_Pearson_account.id}" = "*" 
-      }
+      resources = jsonencode({
+        "com.cloudflare.api.account.${cloudflare_account.Scott_Pearson_account.id}" = "*"
+      })
       permission_groups = [
         {
           id = "3030687196b94b638145a3953da2b699"
