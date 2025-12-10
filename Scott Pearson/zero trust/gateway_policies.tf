@@ -128,7 +128,22 @@ resource "cloudflare_zero_trust_gateway_policy" "gw_policy4" {
   filters       = ["dns"]
   name          = "Block Security Threats (DNS)"
   precedence    = 21000
-  traffic       = "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
+  traffic       = "any(dns.security_category[*] in {${join(" ", [
+    local.subcategories_map["Anonymizer"],
+    local.subcategories_map["Brand Embedding"],
+    local.subcategories_map["Command and Control & Botnet"],
+    local.subcategories_map["Compromised Domain"],
+    local.subcategories_map["Cryptomining"],
+    local.subcategories_map["DGA Domains"],
+    local.subcategories_map["DNS Tunneling"],
+    local.subcategories_map["Malware"],
+    local.subcategories_map["Phishing"],
+    local.subcategories_map["Potentially unwanted software"],
+    local.subcategories_map["Private IP Address"],
+    local.subcategories_map["Scam"],
+    local.subcategories_map["Spam"],
+    local.subcategories_map["Spyware"]
+  ])}})"
   rule_settings = {}
 }
 
