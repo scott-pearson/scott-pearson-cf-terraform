@@ -6,6 +6,24 @@ data "cloudflare_zero_trust_gateway_app_types_list" "apps" {
   account_id = var.cloudflare_account_id
 }
 
+# Use to output the main category groups
+#output "main_categories" {
+#  description = "output main category groups"
+#  value       = keys(local.main_categories_map)
+#}
+
+# Use to output the subcategory groups
+#output "sub_categories" {
+#  description = "output sub category groups"
+#  value       = keys(local.subcategories_map)
+#}
+
+# Use to output the app types
+#output "app_types" {
+#  description = "output the app types"
+#  value       = keys(local.app_types_map)
+#}
+
 locals {
   main_categories_map = {
     for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories.result :
