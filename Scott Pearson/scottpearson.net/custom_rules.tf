@@ -6,9 +6,9 @@ resource "cloudflare_ruleset" "custom_rules" {
   rules = [
     {
       action      = "log"
-      description = "Log clients that passed JS detection"
+      description = "Log clients that failed JS detection"
       enabled     = true
-      expression  = "(cf.bot_management.js_detection.passed)"
+      expression  = "(not cf.bot_management.js_detection.passed)"
       ref         = "js_detections_rule"
     },
     {

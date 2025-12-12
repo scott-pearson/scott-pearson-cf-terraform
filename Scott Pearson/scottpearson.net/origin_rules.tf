@@ -21,6 +21,23 @@ resource "cloudflare_ruleset" "origin_ruleset" {
       enabled     = true
       expression  = "(http.host eq \"fallback.scottpearson.net\")"
       ref         = "origin_rule1"
+    },
+    {
+      action            = "route"
+      action_parameters = {
+        host_header = "scottpearson.net"
+        sni = {
+          value = "scottpearson.net"
+        },
+        origin = {
+          host = "lb.scottpearson.net"
+          port = 443
+        }
+      }
+      description = "Origin override for test2.scottpearson.net based on custom metadata field"
+      enabled     = true
+      expression  = "(lookup_json_string(cf.hostname.metadata, \"customer_id\") eq \"12345\")"
+      ref         = "origin_rule2"
     }
   ]
 }
