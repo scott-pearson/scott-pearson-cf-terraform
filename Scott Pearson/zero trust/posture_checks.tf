@@ -38,3 +38,19 @@ resource "cloudflare_zero_trust_device_posture_rule" "mac_os" {
   ]
   schedule           = "5m"
 }
+
+resource "cloudflare_zero_trust_device_posture_rule" "samsung_os" {
+  account_id         = var.cloudflare_account_id
+  name               = "Android 16.0"
+  type               = "os_version"
+  input              = {
+    operator           = ">="
+    version            = "16.0.0"
+  }
+  match              = [
+    {
+      platform = "android"
+    }
+  ]
+  schedule           = "5m"
+}

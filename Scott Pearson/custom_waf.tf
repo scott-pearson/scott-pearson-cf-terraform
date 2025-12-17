@@ -55,14 +55,21 @@ resource "cloudflare_ruleset" "custom_waf" {
     {
       action = "block"
       description = "Mitigate definite bot traffic [1]"
-      expression = "(cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
+      expression = "(cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
       enabled = true
       ref = "definite_bots"
     },
     {
       action = "managed_challenge"
-      description = "Mitigate likely bot bot traffic [2-29]"
-      expression = "(cf.bot_management.score gt 1 and cf.bot_management.score lt 30 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource and !cf.bot_management.js_detection.passed and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
+      description = "Mitigate likely bot traffic [2-10]"
+      expression = "(cf.bot_management.score gt 1 and cf.bot_management.score lt 11 and not cf.bot_management.verified_bot and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
+      enabled = true
+      ref = "likely_bots2"
+    },
+    {
+      action = "managed_challenge"
+      description = "Mitigate likely bot dynamic traffic [11-30]"
+      expression = "(cf.bot_management.score gt 10 and cf.bot_management.score lt 31 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource and !cf.bot_management.js_detection.passed and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
       enabled = true
       ref = "likely_bots"
     }
