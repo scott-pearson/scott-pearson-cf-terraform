@@ -34,7 +34,7 @@ resource "cloudflare_ruleset" "origin_ruleset" {
           port = 443
         }
       }
-      description = "Origin override for test2.scottpearson.net based on custom metadata field"
+      description = "Origin override for test2.scottpearson.website based on custom metadata field"
       enabled     = true
       expression  = "(lookup_json_string(cf.hostname.metadata, \"customer_id\") eq \"12345\")"
       ref         = "origin_rule2"
