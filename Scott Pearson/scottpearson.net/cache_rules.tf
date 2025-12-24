@@ -158,7 +158,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
         cache = false
       }
       description       = "Bypass Cache For API"
-      expression        = "(http.request.uri.path wildcard r\"/api/*\") or (http.host eq \"api.scottpearson.net\")"
+      expression        = "(http.request.uri.path wildcard \"/api/*\" or http.host eq \"api.scottpearson.net\")"
       enabled           = true
       ref               = "cache_rule3"
     },
@@ -171,7 +171,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
         cache = false
       }
       description       = "Bypass Cache For Wordpress"
-      expression        = "(http.request.uri.path wildcard r\"/wp-admin/*\") or (http.cookie contains \"wordpress_logged_in\")"      
+      expression        = "(http.request.uri.path wildcard \"/wp-admin/*\" or http.cookie contains \"wordpress_logged_in\")"      
       enabled           = true
       ref               = "cache_rule4"
     },
@@ -197,10 +197,9 @@ resource "cloudflare_ruleset" "cache_ruleset" {
         cache = false
       }
       description       = "Bypass Cache For Waiting Room"
-      expression        = "(http.request.uri.path wildcard r\"/waitingroom/*\")"      
+      expression        = "(http.request.uri.path wildcard \"/waitingroom/*\")"      
       enabled           = true
       ref               = "cache_rule6"
     }
-
   ]
 }

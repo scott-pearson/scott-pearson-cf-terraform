@@ -54,10 +54,24 @@ resource "cloudflare_ruleset" "custom_waf" {
     },
     {
       action = "block"
+      description = "Mitigate definite attacks [1]"
+      expression = "(cf.waf.score eq 1)"
+      enabled = true
+      ref = "def_attack"
+    },
+    {
+      action = "block"
       description = "Mitigate definite bot traffic [1]"
       expression = "(cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not any(http.request.headers[\"scott-test\"][*] eq \"1\"))"
       enabled = true
       ref = "definite_bots"
+    },
+    {
+      action = "managed_challenge"
+      description = "Mitigate likely attacks [2-50]"
+      expression = "(cf.waf.score gt 1 and cf.waf.score lt 50)"
+      enabled = true
+      ref = "likely_attack"
     },
     {
       action = "managed_challenge"
