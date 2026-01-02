@@ -7,6 +7,7 @@ export default {
 
     // 1. Retrieve the CF-RAY from the incoming request (Added the missing / here)
     const rayId = request.headers.get("cf-ray");
+    const url = request.headers.get("host");	  
 
     // 2. Create a new Request object based on the original.
     const newRequest = new Request(remote, request);
@@ -15,6 +16,8 @@ export default {
     if (rayId) {
       newRequest.headers.set("parent-ray", rayId);
     }
+
+    newRequest.headers.set("cf-worker-zone", url);
 
     // 4. Fetch using the modified request object
     return await fetch(newRequest);

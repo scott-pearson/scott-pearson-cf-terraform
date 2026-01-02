@@ -13,7 +13,7 @@ resource "cloudflare_zero_trust_gateway_settings" "gw_settings" {
       }
     }
     block_page = {
-      enabled          = true
+      enabled          = false
       mode             = "redirect_uri"
       target_uri       = "https://scottpearson.net/errors/cf-403.html"
       include_context  = true
