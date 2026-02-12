@@ -47,6 +47,13 @@ resource "cloudflare_ruleset" "custom_waf" {
     },
     {
       action = "block"
+      description = "SIRT-1 Block Bucklog ASN + JA4"
+      expression = "(ip.src.asnum eq 211590 and cf.bot_management.ja4 eq \"\")"
+      enabled = true
+      ref = "bucklog_bad"
+    },
+    {
+      action = "block"
       description = "Mitigate requests that have leaked credentials"
       expression = "(cf.waf.credential_check.username_and_password_leaked)"
       enabled = true

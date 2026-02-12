@@ -92,3 +92,12 @@ resource "cloudflare_dns_record" "dns_6" {
   proxied = true
   ttl = 1
 }
+
+resource "cloudflare_dns_record" "dns_7" {
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
+  name = "test3.scottpearson.net"
+  type = "CNAME"
+  content = "lb.scottpearson.net"
+  proxied = true
+  ttl = 1
+}

@@ -24,3 +24,12 @@ resource "cloudflare_dns_record" "dns_2" {
   proxied = true
   ttl = 1
 }
+
+resource "cloudflare_dns_record" "dns_3" {
+  zone_id = cloudflare_zone.scottpearson_website_zone.id
+  name = "michel.scottpearson.website"
+  type = "CNAME"
+  content = "scottpearson.website"
+  proxied = true
+  ttl = 1
+}

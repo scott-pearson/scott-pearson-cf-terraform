@@ -133,9 +133,26 @@ resource "cloudflare_zero_trust_gateway_policy" "gw_policy7" {
     local.subcategories_map["Nudity"],
     local.subcategories_map["Pornography"],
     local.subcategories_map["Gambling"],
-    local.subcategories_map["Artificial Intelligence"]
   ])}})"
   rule_settings = {}
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "gw_policy8" {
+  account_id = var.cloudflare_account_id
+  action     = "block"
+  enabled    = true
+  filters    = ["http"]
+  name       = "DLP"
+  precedence = 25000
+  traffic    = "any(dlp.profiles[*] in {\"a0cabf16-7491-4c9a-ac02-f64cabc66394\" \"0ec8551b-e278-45a0-89da-652d1d7dd3e6\" \"bdf84737-5046-46c7-8dff-eb792901c278\" \"8c426a20-34fb-4fdc-afa0-20b0590750dc\" \"90a1626d-556f-416f-966e-6221219f262d\" \"c8932cc4-3312-4152-8041-f3f257122dc4\" \"e91a2360-da51-4fdf-9711-bcdecd462614\" \"583a2366-b16e-4f5c-90db-494710f4f71c\" \"d658f520-6ecb-4a34-a725-ba37243c2d28\" \"0e1a3432-c838-4b28-b13e-2958047fad7c\"}) and http.body_phase == \"upload\""
+  rule_settings = {
+    forensic_copy = {
+      enabled = false
+    }
+    payload_log = {
+      enabled = true
+    }
+  }
 }
 
 resource "cloudflare_zero_trust_gateway_policy" "gw_policy4" {

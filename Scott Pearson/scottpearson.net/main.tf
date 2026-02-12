@@ -50,7 +50,7 @@ locals {
     "opportunistic_encryption"    = "on"
     "opportunistic_onion"         = "on"
     "origin_error_page_pass_thru" = "off"
-    "polish"                      = "lossless"
+    "polish"                      = "off"
     "pq_keyex"                    = "on"
     "prefetch_preload"            = "on"
     "privacy_pass"                = "on"

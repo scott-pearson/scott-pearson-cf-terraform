@@ -82,6 +82,21 @@ resource "cloudflare_snippet" "snippet_6" {
   }
 }
 
+resource "cloudflare_snippet" "snippet_7" {
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
+  snippet_name = "304"
+  files = [
+    {
+      name    = "304.js"
+      content = file("./snippets/304.js")
+    }
+  ]
+  metadata = {
+    main_module = "304.js"
+  }
+}
+
+
 resource "cloudflare_snippet_rules" "snippet_rules" {
   zone_id  = cloudflare_zone.scottpearson_net_zone.id
   rules = [
@@ -120,6 +135,12 @@ resource "cloudflare_snippet_rules" "snippet_rules" {
       expression = "(http.host eq \"test.scottpearson.net\")"
       description = "Cross zone fetch for headers"
       snippet_name = cloudflare_snippet.snippet_6.snippet_name
+    },
+    {
+      enabled = false
+      expression = "true"
+      description = "304 worker"
+      snippet_name = cloudflare_snippet.snippet_7.snippet_name
     }
   ] 
 }
