@@ -41,6 +41,22 @@ resource "cloudflare_ruleset" "rate_limits" {
     },
     {
       action = "managed_challenge"
+      description = "Rate Limit POST to xmlpc.php"
+      enabled = true
+      expression = "(http.request.uri.path eq \"/xmlrpc.php\" and http.request.method eq \"POST\")"
+      ref = "xmlrpc_rl_rule"
+      ratelimit = {
+        characteristics = [
+          "ip.src",
+          "cf.colo.id"
+        ]
+        mitigation_timeout = 600
+        period = 600
+        requests_per_period = 20
+      }
+    },
+    {
+      action = "managed_challenge"
       description = "WAF Attack Score Rate Limit"
       enabled = true
       expression = "true"
@@ -50,7 +66,7 @@ resource "cloudflare_ruleset" "rate_limits" {
           "ip.src",
           "cf.colo.id"
         ]
-        counting_expression = "(cf.waf.score le 20)"
+        counting_expression = "(cf.waf.score le 50)"
         mitigation_timeout = 3600
         period = 60
         requests_per_period = 5

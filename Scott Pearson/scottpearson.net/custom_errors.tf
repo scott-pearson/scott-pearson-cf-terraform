@@ -12,7 +12,7 @@ resource "cloudflare_ruleset" "error_rules" {
         status_code  = 404
       }
       description = "Custom Error For 404"
-      enabled     = true
+      enabled     = false
       expression  = "(http.response.code eq 404)"
       ref         = "error_rule1"
     }

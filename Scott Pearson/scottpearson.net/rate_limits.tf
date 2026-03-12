@@ -20,6 +20,19 @@ resource "cloudflare_ruleset" "rate_limits" {
         period = 60
         requests_per_period = 5
       }
+    },
+    {
+      action       = "managed_challenge"
+      description  = "Rate Limit by JA4 and ASN"
+      enabled      = true
+      expression   = "true"
+      ref          = "ja4_rl_rule"
+      ratelimit = {
+        characteristics     = ["cf.bot_management.ja4", "ip.src.asnum", "cf.colo.id"]
+        mitigation_timeout  = 60
+        period              = 60
+        requests_per_period = 5
+      }
     }
   ]
 }

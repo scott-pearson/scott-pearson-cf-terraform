@@ -5,6 +5,27 @@ resource "cloudflare_custom_pages" "waf_block" {
   url = "https://scottpearson.net/errors/cf-403.html"
 }
 
+resource "cloudflare_custom_pages" "ip_block" {
+  account_id = cloudflare_account.Scott_Pearson_account.id
+  identifier = "ip_block"
+  state = "customized"
+  url = "https://scottpearson.net/errors/cf-403.html"
+}
+
+resource "cloudflare_custom_pages" "basic_challenge" {
+  account_id = cloudflare_account.Scott_Pearson_account.id
+  identifier = "basic_challenge"
+  state = "customized"
+  url = "https://scottpearson.net/errors/cf-503.html"
+}
+
+resource "cloudflare_custom_pages" "country_challenge" {
+  account_id = cloudflare_account.Scott_Pearson_account.id
+  identifier = "country_challenge"
+  state = "customized"
+  url = "https://scottpearson.net/errors/cf-503.html"
+}
+
 resource "cloudflare_custom_pages" "cf_500_errors" {
   account_id = cloudflare_account.Scott_Pearson_account.id
   identifier = "500_errors"
@@ -24,6 +45,13 @@ resource "cloudflare_custom_pages" "managed_challenge" {
   identifier = "managed_challenge"
   state = "customized"
   url = "https://scottpearson.net/errors/cf-503.html"
+}
+
+resource "cloudflare_custom_pages" "javascript_challenge" {
+  account_id = cloudflare_account.Scott_Pearson_account.id
+  identifier = "under_attack"
+  state = "customized"
+  url = "https://scottpearson.net/errors/cf-underAttack.html"
 }
 
 resource "cloudflare_custom_pages" "ratelimit_block" {

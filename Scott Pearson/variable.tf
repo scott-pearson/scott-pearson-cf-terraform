@@ -35,3 +35,9 @@ variable "origin_ips" {
   type        = set(string)
   sensitive   = false
 }
+
+variable "sus_asns" {
+  description = "A list of Suspicous ASNs to add to the Cloudflare ASN lists"
+  type        = set(number)
+  sensitive   = false
+}

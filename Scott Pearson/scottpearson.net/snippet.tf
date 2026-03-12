@@ -96,6 +96,19 @@ resource "cloudflare_snippet" "snippet_7" {
   }
 }
 
+resource "cloudflare_snippet" "snippet_8" {
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
+  snippet_name = "underAttackCustomPage"
+  files = [
+    {
+      name    = "underAttackCustomPage.js"
+      content = file("./snippets/underAttackCustomPage.js")
+    }
+  ]
+  metadata = {
+    main_module = "underAttackCustomPage.js"
+  }
+}
 
 resource "cloudflare_snippet_rules" "snippet_rules" {
   zone_id  = cloudflare_zone.scottpearson_net_zone.id
@@ -141,6 +154,12 @@ resource "cloudflare_snippet_rules" "snippet_rules" {
       expression = "true"
       description = "304 worker"
       snippet_name = cloudflare_snippet.snippet_7.snippet_name
+    },
+    {
+      enabled = true
+      expression = "(http.request.uri.path eq \"/errors/cf-underAttack.html\")"
+      description = "Custom error page for Under Attack Mode"
+      snippet_name = cloudflare_snippet.snippet_8.snippet_name
     }
   ] 
 }

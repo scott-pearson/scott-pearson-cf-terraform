@@ -42,6 +42,10 @@ resource "cloudflare_zero_trust_access_application" "access_application" {
     {
       type = "public"
       uri  = "scottpearson.net/wp-admin"
+    },
+    {
+      type = "public"
+      uri  = "scottpearson.net/wp-login.php"
     }
   ]
   app_launcher_visible = true

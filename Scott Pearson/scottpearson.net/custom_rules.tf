@@ -6,13 +6,6 @@ resource "cloudflare_ruleset" "custom_rules" {
   rules = [
     {
       action      = "log"
-      description = "Log clients that failed JS detection"
-      enabled     = true
-      expression  = "(not cf.bot_management.js_detection.passed and not cf.bot_management.verified_bot)"
-      ref         = "js_detections_rule"
-    },
-    {
-      action      = "log"
       description = "API Shield Fallthrough rule"
       enabled     = true
       expression  = "(cf.api_gateway.fallthrough_detected and http.host in {\"api.scottpearson.net\"})"

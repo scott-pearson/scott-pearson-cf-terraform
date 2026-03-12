@@ -9,8 +9,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
       action            = "set_cache_settings"
       action_parameters = {
         browser_ttl = {
-          default = 86400,
-          mode = "override_origin"
+          mode = "respect_origin"
         }
         cache = true
         cache_key = {
@@ -32,7 +31,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
           }
         }
         edge_ttl = {
-          default = 86400
+          default = 3600
           mode = "override_origin"
           status_code_ttl = [
             {
@@ -59,7 +58,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
                 from      = 404,
                 to        = 499
               }
-              value = 3600
+              value = 60
             },
             {
               status_code_range = {
@@ -72,7 +71,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
         }
         origin_cache_control = true
       }
-      description       = "Cache Everything"
+      description       = "Cache Everything for 1h, 3xx and 4xx status codes overrides to 60s"
       expression        = true
       enabled           = true
       ref               = "cache_rule1"
@@ -81,31 +80,30 @@ resource "cloudflare_ruleset" "cache_ruleset" {
       action            = "set_cache_settings"
       action_parameters = {
         browser_ttl = {
-          default = 604800,
-          mode = "override_origin"
+          mode = "respect_origin"
         }
         cache = true
         cache_key = {
-          custom_key = {
-            header = {
-              contains = {
-                lb = [
-                  "eu",
-                  "amer",
-                  "row"
-                ]
+          cache_deception_armor = true,
+            custom_key = {
+              header = { 
+                contains = {
+                  lb = [
+                    "eu",
+                    "amer",
+                    "row"
+                  ]
+                }
+              },
+              user = {
+                device_type = true,
+                geo = true,
+                lang = false
               }
-            },
-            user = {
-              device_type = true,
-              geo = true,
-              lang = false
             }
-          }
         }
         edge_ttl = {
-          default = 604800
-          mode = "override_origin"
+          mode = "respect_origin"
           status_code_ttl = [
             {
               status_code_range = {
@@ -131,7 +129,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
                 from      = 404,
                 to        = 499
               }
-              value = 3600
+              value = 60
             },
             {
               status_code_range = {
@@ -144,7 +142,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
         }
         origin_cache_control = true
       }
-      description       = "Cache Default File Extensions"
+      description       = "Cache Default File Extensions, 3xx and 4xx status codes overrides to 60s"
       expression        = "(http.request.uri.path.extension in {\"7z\" \"avi\" \"avif\" \"apk\" \"bin\" \"bmp\" \"bz2\" \"class\" \"css\" \"csv\" \"doc\" \"docx\" \"dmg\" \"ejs\" \"eot\" \"eps\" \"exe\" \"flac\" \"gif\" \"gz\" \"ico\" \"iso\" \"jar\" \"jpg\" \"jpeg\" \"js\" \"mid\" \"midi\" \"mkv\" \"mp3\" \"mp4\" \"ogg\" \"otf\" \"pdf\" \"pict\" \"pls\" \"png\" \"ppt\" \"pptx\" \"ps\" \"rar\" \"svg\" \"svgz\" \"swf\" \"tar\" \"tif\" \"tiff\" \"ttf\" \"webm\" \"webp\" \"woff\" \"woff2\" \"xls\" \"xlsx\" \"zip\" \"zst\"})"
       enabled           = true
       ref               = "cache_rule2"
@@ -171,7 +169,7 @@ resource "cloudflare_ruleset" "cache_ruleset" {
         cache = false
       }
       description       = "Bypass Cache For Wordpress"
-      expression        = "(http.request.uri.path wildcard \"/wp-admin/*\" or http.cookie contains \"wordpress_logged_in\")"      
+      expression        = "(http.request.uri.path wildcard \"/wp-admin/*\" or http.request.uri.path eq \"/wp-login.php\" or http.cookie contains \"wordpress_logged_in\")"      
       enabled           = true
       ref               = "cache_rule4"
     },
