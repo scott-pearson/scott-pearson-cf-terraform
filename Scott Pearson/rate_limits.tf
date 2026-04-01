@@ -37,6 +37,7 @@ resource "cloudflare_ruleset" "rate_limits" {
         mitigation_timeout = 300
         period = 60
         requests_per_period = 5
+        requests_to_origin = "true"
       }
     },
     {
@@ -53,6 +54,7 @@ resource "cloudflare_ruleset" "rate_limits" {
         mitigation_timeout = 600
         period = 600
         requests_per_period = 20
+        requests_to_origin = "true"
       }
     },
     {
@@ -69,7 +71,25 @@ resource "cloudflare_ruleset" "rate_limits" {
         counting_expression = "(cf.waf.score le 50)"
         mitigation_timeout = 3600
         period = 60
-        requests_per_period = 5
+        requests_per_period = 10
+        requests_to_origin = "false"
+      }
+    },
+    {
+      action = "managed_challenge"
+      description = "Rate Limit 404s"
+      enabled = true
+      expression = "true"
+      ref = "404_attack_rl_rule"
+      ratelimit = {
+        characteristics = [
+          "ip.src",
+          "cf.colo.id"
+        ]
+        counting_expression = "(http.response.code eq 404)"
+        mitigation_timeout = 3600
+        period = 60
+        requests_per_period = 50
         requests_to_origin = "true"
       }
     }

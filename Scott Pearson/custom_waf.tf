@@ -54,9 +54,9 @@ resource "cloudflare_ruleset" "custom_waf" {
     },
     {
       action      = "log"
-      description = "Log login failures using account takeover detections ID"
+      description = "Log login attempts/failures anomalys using account takeover detections ID"
       enabled     = true
-      expression  = "(any(cf.bot_management.detection_ids[*] in {201326592 201326593 201326598}))"
+      expression  = "(any(cf.bot_management.detection_ids[*] in {201326592 201326593}))"
       ref         = "takeover_detections_rule"
     },
     {
@@ -76,7 +76,7 @@ resource "cloudflare_ruleset" "custom_waf" {
     {
       action = "block"
       description = "SIRT-1 Block Suspicious ASNs + JA4"
-      expression = "(ip.src.asnum in $sus_asns and cf.bot_management.ja4 in {\"\" \"t13d1012h1_18ef40b21276_6c9e902ecd13\" \"t13d1011h1_18ef40b21276_879711aa9f16\"})"
+      expression = "(ip.src.asnum in $sus_asns and (cf.bot_management.ja4 in {\"\" \"t13d1012h1_18ef40b21276_6c9e902ecd13\" \"t13d1011h1_18ef40b21276_879711aa9f16\"} or any(cf.bot_management.detection_ids[*] eq 33554817)))"
       enabled = true
       ref = "bucklog_bad"
     },
@@ -132,7 +132,7 @@ resource "cloudflare_ruleset" "custom_waf" {
     {
       action = "managed_challenge"
       description = "Mitigate likely bot dynamic traffic [11-30]"
-      expression = "(cf.bot_management.score gt 10 and cf.bot_management.score lt 31 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource and not cf.bot_management.js_detection.passed and not (any(http.request.headers[\"scott-test\"][*] eq \"1\") or any(http.request.headers[\"cf-worker-zone\"][*] eq \"test.scottpearson.net\")) and not (http.request.uri.path contains \"/.well-known/acme-challenge/\" and http.user_agent eq \"Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)\"))"
+      expression = "(cf.bot_management.score gt 10 and cf.bot_management.score lt 31 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource and not cf.bot_management.js_detection.passed and not (any(http.request.headers[\"scott-test\"][*] eq \"1\") or any(http.request.headers[\"cf-worker-zone\"][*] eq \"scottpearson.website\")) and not (http.request.uri.path contains \"/.well-known/acme-challenge/\" and http.user_agent eq \"Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)\"))"
       enabled = true
       ref = "likely_bots"
     }

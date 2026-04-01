@@ -7,7 +7,7 @@ export default {
 
     // 1. Retrieve the CF-RAY from the incoming request (Added the missing / here)
     const rayId = request.headers.get("cf-ray");
-    const url = request.headers.get("host");	  
+    const url = new URL(remote).hostname;
 
     // 2. Create a new Request object based on the original.
     const newRequest = new Request(remote, request);

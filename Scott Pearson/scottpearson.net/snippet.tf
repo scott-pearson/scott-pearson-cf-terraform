@@ -110,6 +110,20 @@ resource "cloudflare_snippet" "snippet_8" {
   }
 }
 
+resource "cloudflare_snippet" "snippet_9" {
+  zone_id  = cloudflare_zone.scottpearson_net_zone.id
+  snippet_name = "fetchCFObject"
+  files = [
+    {
+      name    = "cf-object.js"
+      content = file("./snippets/cf-object.js")
+    }
+  ]
+  metadata = {
+    main_module = "cf-object.js"
+  }
+}
+
 resource "cloudflare_snippet_rules" "snippet_rules" {
   zone_id  = cloudflare_zone.scottpearson_net_zone.id
   rules = [
@@ -160,6 +174,12 @@ resource "cloudflare_snippet_rules" "snippet_rules" {
       expression = "(http.request.uri.path eq \"/errors/cf-underAttack.html\")"
       description = "Custom error page for Under Attack Mode"
       snippet_name = cloudflare_snippet.snippet_8.snippet_name
+    },
+    {
+      enabled = true
+      expression = "(http.request.uri.path eq \"/object\")"
+      description = "Output the cf object"
+      snippet_name = cloudflare_snippet.snippet_9.snippet_name
     }
   ] 
 }

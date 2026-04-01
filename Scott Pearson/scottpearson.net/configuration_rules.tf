@@ -34,6 +34,16 @@ resource "cloudflare_ruleset" "config_rules" {
       enabled = true
       expression = "(http.host eq \"tunnel-api.scottpearson.net\")"
       ref = "config_rule3"
+    },
+    {
+      action = "set_config"
+      action_parameters = {
+        ssl = "flexible"
+      }
+      description = "Flexible SSL for api"
+      enabled = true
+      expression = "(http.host eq \"api.scottpearson.net\")"
+      ref = "config_rule4"
     }
   ]
 }

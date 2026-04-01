@@ -197,6 +197,9 @@ resource "cloudflare_ruleset" "custom_log_fields" {
         response_fields = [
           {
             name = "cache-control"
+          },
+          {
+            name = "cache-tag"
           }
         ]
       }

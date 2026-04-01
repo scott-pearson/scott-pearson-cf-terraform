@@ -79,7 +79,7 @@ export default {
               <p>This information can help our team diagnose the issue. If you contact support, please provide these details.</p>
               <ul>
                   <li>::CLOUDFLARE_ERROR_500S_BOX::</li>
-                  <li>Timestamp (UTC):</strong> ${timestamp}</li>
+                  <li>Timestamp (UTC):${timestamp}</li>
               </ul>
           </div>
           <div class="contact">

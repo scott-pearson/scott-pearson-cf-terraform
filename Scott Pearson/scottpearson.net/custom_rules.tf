@@ -31,6 +31,13 @@ resource "cloudflare_ruleset" "custom_rules" {
       enabled     = true
       expression  = "(http.host in {\"ns1.scottpearson.net\" \"ns2.scottpearson.net\"})"
       ref         = "ns_rule"
+    },
+    {
+      action      = "block"
+      description = "API Login/Logout Sequence"
+      enabled     = true
+      expression  = "(cf.sequence.previous_ops[0] eq \"9882a302\" and cf.sequence.current_op eq \"e041aff0\" and cf.sequence.msec_since_op[\"9882a302\"] le 10000)"
+      ref         = "seq_rule"
     }
   ]
 }

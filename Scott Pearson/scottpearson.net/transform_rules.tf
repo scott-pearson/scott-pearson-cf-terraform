@@ -52,7 +52,23 @@ resource "cloudflare_ruleset" "reqheader_transforms" {
       enabled     = true
       expression  = true
       ref         = "reqheader_transform1"
+    },
+    {
+      action            = "rewrite"
+      action_parameters = {
+        headers = {
+          x-cache-tag = {
+            expression = "raw.http.request.uri"
+            operation  = "set"
+          }
+        }
+      }
+      description = "Set x-cache-tag Header"
+      enabled     = true
+      expression  = true
+      ref         = "reqheader_transform2"
     }
+
   ]
 }
 
@@ -69,7 +85,7 @@ resource "cloudflare_ruleset" "resheader_transforms" {
         headers = {
           x-country = {
             expression = "ip.src.country"
-            operation  = "set"
+            operation  = "add"
           }
         }
       }
@@ -77,6 +93,21 @@ resource "cloudflare_ruleset" "resheader_transforms" {
       enabled     = true
       expression  = true
       ref         = "resheader_transform1"
+    },
+    {
+      action      = "rewrite"
+      action_parameters = {
+        headers = {
+          "x-cache-tag" = {
+            expression = "raw.http.request.uri"
+            operation  = "add"
+          }
+        } 
+      }
+      description = "Set x-cache-tag Header"
+      enabled = true
+      expression = "true"
+      ref = "resheader_transform2"
     }
   ]
 }

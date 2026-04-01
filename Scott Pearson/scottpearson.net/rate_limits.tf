@@ -19,19 +19,35 @@ resource "cloudflare_ruleset" "rate_limits" {
         mitigation_timeout = 60
         period = 60
         requests_per_period = 5
+        requests_to_origin = true
       }
     },
     {
       action       = "managed_challenge"
       description  = "Rate Limit by JA4 and ASN"
-      enabled      = true
-      expression   = "true"
+      enabled   = true
+      expression   = "(http.host contains \"scottpearson.net\")"
       ref          = "ja4_rl_rule"
       ratelimit = {
-        characteristics     = ["cf.bot_management.ja4", "ip.src.asnum", "cf.colo.id"]
+        characteristics     = ["cf.bot_management.ja4", "ip.src.asnum", "http.request.uri.path", "cf.colo.id"]
         mitigation_timeout  = 60
         period              = 60
-        requests_per_period = 5
+        requests_per_period = 500
+        requests_to_origin  = true
+      }
+    },
+    {
+      action = "managed_challenge"
+      description = "Rate Limit on Clearance Cookie"
+      enabled = true
+      expression = "(len(http.request.cookies[\"cf_clearance\"]) > 0)"
+      ref = "clearance_rl_rule"
+      ratelimit = {
+        characteristics = ["http.request.cookies[\"cf_clearance\"]", "cf.colo.id"]
+        mitigation_timeout = 1800
+        period = 60
+        requests_per_period = 500
+        requests_to_origin  = true
       }
     }
   ]

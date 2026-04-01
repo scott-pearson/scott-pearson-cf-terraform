@@ -201,3 +201,24 @@ resource "cloudflare_ruleset" "cache_ruleset" {
     }
   ]
 }
+
+resource "cloudflare_ruleset" "cache_response_ruleset" {
+  zone_id     = cloudflare_zone.scottpearson_net_zone.id 
+  name        = "default"
+  phase       = "http_response_cache_settings"
+  kind        = "zone"
+  description = ""
+  rules = [
+    {
+      action            = "set_cache_tags"
+      action_parameters = {
+        expression = "split(http.response.headers[\"content-type\"][0], \" \", 1)"
+        operation  = "add"
+      }
+      description       = "Set Content Type Cache Tag"
+      enabled           = true
+      expression        = "true"
+      ref               = "cache_response_rule1"
+    }
+  ]
+}
