@@ -12,6 +12,12 @@ resource "cloudflare_ruleset" "custom_rules" {
       ref         = "api_fallthrough_rule"
     },
     {
+      action      = "log"
+      description = "Log LLM Prompts"
+      expression  = "(cf.llm.prompt.detected)"  
+      ref         = "log_llm_rule"
+    },
+    {
       action      = "block"
       description = "Block API requests with no authentication"
       enabled     = true

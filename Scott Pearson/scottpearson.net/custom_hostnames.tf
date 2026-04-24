@@ -12,7 +12,7 @@ resource "cloudflare_custom_hostname" "scott-ch-custom-hostname" {
     bundle_method = "ubiquitous"
     certificate_authority = "google"
     cloudflare_branding = false
-    method = "txt"
+    method = "http"
     settings = {
       ciphers = ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-ECDSA-CHACHA20-POLY1305"]
       early_hints = "on"
@@ -32,7 +32,7 @@ resource "cloudflare_custom_hostname" "test2-custom-hostname" {
     bundle_method = "ubiquitous"
     certificate_authority = "google"
     cloudflare_branding = false
-    method = "txt"
+    method = "http"
     settings = {
       ciphers = ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-ECDSA-CHACHA20-POLY1305"]
       early_hints = "on"

@@ -63,6 +63,7 @@ locals {
     "server_side_exclude"         = "on"
     "sort_query_string_for_cache" = "off"
     "ssl"                         = "strict"
+    "speed_brain"                 = "on"
     "tls_1_2_only"                = "off"
     "tls_1_3"                     = "zrt"
     "tls_client_auth"             = "off"
