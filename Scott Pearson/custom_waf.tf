@@ -76,7 +76,7 @@ resource "cloudflare_ruleset" "custom_waf" {
     {
       action = "block"
       description = "SIRT-1 Block Suspicious ASNs + JA4"
-      expression = "(ip.src.asnum in $sus_asns and (cf.bot_management.ja4 in {\"\" \"t13d1012h1_18ef40b21276_6c9e902ecd13\" \"t13d1011h1_18ef40b21276_879711aa9f16\"} or any(cf.bot_management.detection_ids[*] eq 33554817)))"
+      expression = "(ip.src.asnum in $sus_asns and (cf.bot_management.ja4 in {\"\" \"t13d1012h1_18ef40b21276_6c9e902ecd13\" \"t13d1011h1_18ef40b21276_879711aa9f16\" \"t13d131100_f57a46bbacb6_e5728521abd4\"} or any(cf.bot_management.detection_ids[*] eq 33554817)))"
       enabled = true
       ref = "bucklog_bad"
     },

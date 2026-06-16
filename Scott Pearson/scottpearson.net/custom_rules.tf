@@ -18,8 +18,8 @@ resource "cloudflare_ruleset" "custom_rules" {
       ref         = "log_llm_rule"
     },
     {
-      action      = "block"
-      description = "Block API requests with no authentication"
+      action      = "log"
+      description = "Log API requests with no authentication"
       enabled     = true
       expression  = "(not cf.api_gateway.auth_id_present and http.host eq \"api.scottpearson.net\")"
       ref = "api_auth_rule"

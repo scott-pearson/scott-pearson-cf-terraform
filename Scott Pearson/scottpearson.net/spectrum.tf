@@ -1,7 +1,7 @@
 resource "cloudflare_spectrum_application" "ssh1_scottpearson_net" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id 
   protocol = "ssh"
-  origin_direct = ["tcp://104.248.162.62:22"]
+  origin_direct = ["tcp://87.106.35.69:22"]
   ip_firewall = true
   proxy_protocol = "off"
   tls = "off"

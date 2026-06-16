@@ -23,13 +23,10 @@ resource "cloudflare_zone_dns_settings" "scott_pearson_net_dns_settings" {
 }
 
 # Bug with this - https://github.com/cloudflare/terraform-provider-cloudflare/issues/5925
-#resource "cloudflare_zone_dnssec" "scottpearson_net_dnssec" {
-#  zone_id = cloudflare_zone.scottpearson_net_zone.id
-#  dnssec_multi_signer = false
-#  dnssec_presigned = false
-#  dnssec_use_nsec3 = false
-#  status = "active"
-#}
+resource "cloudflare_zone_dnssec" "scottpearson_net_dnssec" {
+  zone_id = cloudflare_zone.scottpearson_net_zone.id
+  status = "active"
+}
 
 # For hostnames needing regional services
 resource "cloudflare_regional_hostname" "test" {
@@ -78,24 +75,6 @@ resource "cloudflare_dns_record" "dns_4" {
 resource "cloudflare_dns_record" "dns_5" {
   zone_id = cloudflare_zone.scottpearson_net_zone.id
   name = "test.scottpearson.net"
-  type = "CNAME"
-  content = "lb.scottpearson.net"
-  proxied = true
-  ttl = 1
-}
-
-resource "cloudflare_dns_record" "dns_6" {
-  zone_id = cloudflare_zone.scottpearson_net_zone.id
-  name = "api-tunnel.scottpearson.net"
-  type = "CNAME"
-  content = "3aef2ee0-861f-4883-8641-ec8e6d029ab8.cfargotunnel.com"
-  proxied = true
-  ttl = 1
-}
-
-resource "cloudflare_dns_record" "dns_7" {
-  zone_id = cloudflare_zone.scottpearson_net_zone.id
-  name = "test3.scottpearson.net"
   type = "CNAME"
   content = "lb.scottpearson.net"
   proxied = true

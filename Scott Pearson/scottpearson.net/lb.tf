@@ -84,7 +84,7 @@ resource "cloudflare_load_balancer_pool" "prod_lb_pool" {
   origins = [
     {
       name = "scott-web01"
-      address = "104.248.162.62"
+      address = "87.106.35.69"
       weight = 1
       enabled = true
     }

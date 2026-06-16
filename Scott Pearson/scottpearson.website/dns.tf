@@ -2,7 +2,7 @@ resource "cloudflare_dns_record" "dns_0" {
   zone_id = cloudflare_zone.scottpearson_website_zone.id
   name = "scottpearson.website"
   type = "A"
-  content = "104.248.162.62"
+  content = "87.106.35.69"
   proxied = true 
   ttl = 1
 }

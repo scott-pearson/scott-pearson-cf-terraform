@@ -219,6 +219,23 @@ resource "cloudflare_ruleset" "cache_response_ruleset" {
       enabled           = true
       expression        = "true"
       ref               = "cache_response_rule1"
+    },
+    {
+      action                   = "set_cache_control"
+      action_parameters        = {
+        stale_if_error         = {
+          cloudflare_only      = false
+          operation            = "remove"
+        }
+        stale_while_revalidate = {
+          cloudflare_only      = false
+          operation            = "remove"
+        }
+      }
+      description              = "Remove Cache Control Directives"
+      enabled                  = false
+      expression               = "(http.request.uri.path eq \"/\")"
+      ref                      = "cache_response_rule2"
     }
   ]
 }
